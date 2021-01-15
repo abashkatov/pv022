@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using static System.Console;
 
 namespace ConsoleApp3
@@ -7,24 +8,43 @@ namespace ConsoleApp3
     {
         static void Main(string[] args)
         {
-            string fio = "Ivanov Ivan Ivanovich";
-            fio.Trim('h');
+            string FIO = ReadLine();
+            FIO = "Ivanov Ivan Ivanovich aaa aa";
+            /*
+             * 1 Ввод ФИО (одной строкой)
+             * 2 Если пользователь ввёл неверные данные, то попросить повторить ввод
+             *      Верные данные:
+             *          - три слова
+             *          - каждое слово более трёх символов
+             *  3 Вывести текстовую строку вида: "Фамилия: <Фамилия>, Имя: <Имя>, Отчество: <Отчество>"
+             * 
+             * */
 
-            string[] parts = fio.Split(' ');
+            int n = 100000;
+            ////// StringBuilder
+            StringBuilder stringBuilder = new StringBuilder();
+            var from = DateTime.Now;
+            for (int i = 0; i < n; i++)
+            {
+                stringBuilder.Append(i);
+            }
+            string total = stringBuilder.ToString();
+            var span = from.Subtract(DateTime.Now);
 
-            WriteLine("F: " + parts[0]);
-            WriteLine("I: " + parts[1]);
-            WriteLine("O: " + parts[2]);
+            WriteLine(span.TotalMilliseconds);
 
-            fio = parts[0] + ' ' + parts[1] + ' ' + parts[2];
-            //fio = "{parts[0]} {parts[1]} {parts[2]}";
-            WriteLine(fio);
+            ////// string
+            string str = "";
+            from = DateTime.Now;
+            for (int i = 0; i < n; i++)
+            {
+                str += i;
+            }
+            total = str;
+            span = from.Subtract(DateTime.Now);
 
-            fio = string.Join(" ", parts[0], parts[1], parts[2]);
-            WriteLine(fio);
+            WriteLine(span.TotalMilliseconds);
 
-            fio = string.Join(" ", parts);
-            WriteLine(fio);
 
             ReadKey();
         }

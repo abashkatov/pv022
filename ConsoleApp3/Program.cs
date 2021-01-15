@@ -7,30 +7,22 @@ namespace ConsoleApp3
     {
         static void Main(string[] args)
         {
-            string[] 
-                names1 = { "Name1" , "Name2", "Name3", "NameN" },
-                names2 = { "Name4" , "Name5", "Name6" },
-                namesTotal = new string[2]
-            ;
+            int[,] arr = { { 1,2,3}, { 4,5,6} };
+            //int[,] arr = new int[2, 3] { { 1,2,3}, { 4,5,6} };
+            //arr[0, 0] = 1;
+            //arr[0, 1] = 2;
+            //arr[0, 2] = 3;
+            //arr[1, 0] = 4;
+            //arr[1, 1] = 5;
+            //arr[1, 2] = 6;
 
-            namesTotal = new string[names1.Length + names2.Length];
-            int currentPosition = 0;
-            foreach (string name in names1)
-            {
-                namesTotal[currentPosition] = names1[currentPosition];
-                currentPosition++;
+            for (int i = 0; i < 2; i++) {
+                for (int j = 0; j < 3; j++)
+                {
+                    Write(arr[i, j] + "   ");
+                }
+                WriteLine();
             }
-            foreach (string name in names2)
-            {
-                namesTotal[currentPosition] = names2[currentPosition - names1.Length];
-                currentPosition++;
-            }
-            foreach (string name in namesTotal)
-            {
-                WriteLine(name);
-            }
-
-
             ReadKey();
         }
     }

@@ -7,31 +7,24 @@ namespace ConsoleApp3
     {
         static void Main(string[] args)
         {
-            //// Создание текстовых строк
-            string[] str1 = new string[3];
-            str1[0] = new string(new char[] { 'c', 'z', '1' });
-            str1[1] = new string(new char[] { 'c', '1', '2', '3', '4', '5' }, 2, 3);
-            str1[2] = new string('c', 4);
+            string fio = "Ivanov Ivan Ivanovich";
+            fio.Trim('h');
 
-            foreach (string str in str1)
-            {
-                WriteLine(str);
-            }
+            string[] parts = fio.Split(' ');
 
-            // Конкатенация, интерполяция и форматирование строк
-            string
-                path = @"C:\WINDOWS\Microsoft.Net\assembly\",
-                fileName = "file",
-                fullPath = path + fileName + ".txt"
-            ;
-            WriteLine(fullPath);
-            
-            fullPath = $"C:\\WINDOWS\\Microsoft.Net\\assembly\\{fileName}.txt";
-            WriteLine(fullPath);
+            WriteLine("F: " + parts[0]);
+            WriteLine("I: " + parts[1]);
+            WriteLine("O: " + parts[2]);
 
-            WriteLine("{0, 10:p}, {1, 10}, {2, 10}", 10, 10000, 20);
-            WriteLine("{0, 10:p}, {1, 10}, {2, 10}", 100000, 10, 20);
-            WriteLine("{0, 10:p}, {1, 10}, {2, 10:### ### ###}", 100000, 10, 2000000);
+            fio = parts[0] + ' ' + parts[1] + ' ' + parts[2];
+            //fio = "{parts[0]} {parts[1]} {parts[2]}";
+            WriteLine(fio);
+
+            fio = string.Join(" ", parts[0], parts[1], parts[2]);
+            WriteLine(fio);
+
+            fio = string.Join(" ", parts);
+            WriteLine(fio);
 
             ReadKey();
         }

@@ -7,25 +7,32 @@ namespace ConsoleApp3
     {
         static void Main(string[] args)
         {
-            int[][] arr = new int[3][];
+            //// Создание текстовых строк
+            string[] str1 = new string[3];
+            str1[0] = new string(new char[] { 'c', 'z', '1' });
+            str1[1] = new string(new char[] { 'c', '1', '2', '3', '4', '5' }, 2, 3);
+            str1[2] = new string('c', 4);
 
-            arr[0] = new int[3];
-            arr[0][0] = 1;
-            arr[0][1] = 2;
-            arr[0][2] = 3;
-
-            arr[1] = new int[5] { 4, 5, 6, 7, 8 };
-
-            arr[2] = new int[] { 4, 5, 6, 9 };
-
-
-            for (int i = 0; i < arr.Length; i++) {
-                for (int j = 0; j < arr[i].Length; j++)
-                {
-                    Write(arr[i][j] + "   ");
-                }
-                WriteLine();
+            foreach (string str in str1)
+            {
+                WriteLine(str);
             }
+
+            // Конкатенация, интерполяция и форматирование строк
+            string
+                path = @"C:\WINDOWS\Microsoft.Net\assembly\",
+                fileName = "file",
+                fullPath = path + fileName + ".txt"
+            ;
+            WriteLine(fullPath);
+            
+            fullPath = $"C:\\WINDOWS\\Microsoft.Net\\assembly\\{fileName}.txt";
+            WriteLine(fullPath);
+
+            WriteLine("{0, 10:p}, {1, 10}, {2, 10}", 10, 10000, 20);
+            WriteLine("{0, 10:p}, {1, 10}, {2, 10}", 100000, 10, 20);
+            WriteLine("{0, 10:p}, {1, 10}, {2, 10:### ### ###}", 100000, 10, 2000000);
+
             ReadKey();
         }
     }

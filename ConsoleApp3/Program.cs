@@ -5,10 +5,29 @@ using static System.Console;
 namespace ConsoleApp3
 {
     enum РабочиеДни { Понедельник, Вторник, Среда, Четверг, Пятница}
+    enum ВыходныеДни { Суббота, Воскресение}
     class Program
     {
         static void Main(string[] args)
         {
+            if (args.Length < 1) {
+                WriteLine("Нет такого дня");
+                return;
+            }
+            string day = args[0];
+            if (Enum.IsDefined(typeof(РабочиеДни), day))
+            {
+                WriteLine("Это рабочий день");
+            }
+            else if (Enum.IsDefined(typeof(ВыходныеДни), day))
+            {
+                WriteLine("Это выходной день");
+            }
+            else { 
+                WriteLine("Нет такого дня");
+            }
+
+
             /**
              * Задание 1
              * 

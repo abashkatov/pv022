@@ -8,43 +8,28 @@ namespace ConsoleApp3
     {
         static void Main(string[] args)
         {
-            string FIO = ReadLine();
-            FIO = "Ivanov Ivan Ivanovich aaa aa";
-            /*
-             * 1 Ввод ФИО (одной строкой)
-             * 2 Если пользователь ввёл неверные данные, то попросить повторить ввод
-             *      Верные данные:
-             *          - три слова
-             *          - каждое слово более трёх символов
-             *  3 Вывести текстовую строку вида: "Фамилия: <Фамилия>, Имя: <Имя>, Отчество: <Отчество>"
+            // Принимать через аргументы командной строки два значения: высота матрицы, ширина матрицы.
+            // Выводить матрицу на экран.
+            /**
+             * Принимать размер матрицы числами
+             * 2 3
+             *      0 1 2
+             *      3 4 5
+             * 
+             * 3 4
+             *      0  1  2  3
+             *      4  5  6  7
+             *      8  9 10 11
+             * 
+             * Принимать размер матрицы ключами со значениями
+             * -h=2 -w=3
              * 
              * */
 
-            int n = 100000;
-            ////// StringBuilder
-            StringBuilder stringBuilder = new StringBuilder();
-            var from = DateTime.Now;
-            for (int i = 0; i < n; i++)
-            {
-                stringBuilder.Append(i);
+            WriteLine(args.Length);
+            foreach (string arg in args) { 
+                WriteLine(arg);
             }
-            string total = stringBuilder.ToString();
-            var span = from.Subtract(DateTime.Now);
-
-            WriteLine(span.TotalMilliseconds);
-
-            ////// string
-            string str = "";
-            from = DateTime.Now;
-            for (int i = 0; i < n; i++)
-            {
-                str += i;
-            }
-            total = str;
-            span = from.Subtract(DateTime.Now);
-
-            WriteLine(span.TotalMilliseconds);
-
 
             ReadKey();
         }

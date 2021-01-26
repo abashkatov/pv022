@@ -2,7 +2,20 @@
 
 namespace ConsoleApp3
 {
-    abstract class Person { 
+    abstract class BaseEntity 
+    {
+        public string publicString = "publicString BaseEntity";
+        protected string protectedString = "BaseEntity";
+        private string privateString = "privateString";
+    }
+    abstract class BasePerson: BaseEntity {
+        public new string publicString = "publicString BasePerson";
+        protected new string protectedString = "BasePerson";
+        protected string ProtectedString {
+            get => base.protectedString;
+        }
+    }
+    abstract class Person: BasePerson { 
         public string Name;
         public int Age;
         public bool hasAccess()
@@ -10,7 +23,7 @@ namespace ConsoleApp3
             return false;
         }
         abstract public int GetNumber();
-        public string GetSelf() {
+        public virtual string GetSelf() {
             return "Person";
         }
         abstract public string GetThis();
@@ -26,7 +39,7 @@ namespace ConsoleApp3
         {
             return 1;
         }
-        public new string GetSelf()
+        public override string GetSelf()
         {
             return "Employer";
         }
@@ -39,14 +52,27 @@ namespace ConsoleApp3
             return base.GetSelf();
         }
     }
-    sealed class Client: Person {
+    class Client: Person {
         public int CardNumber;
-
+        private string newPrivateString = "";
+        private string privateString = "";
+        //protected new string protectedString = "Client";
+        public void PrintProtectedString() {
+            //WriteLine(protectedString);
+            //WriteLine(base.protectedString);
+            //protectedString = "";
+            var t = this;
+            t.protectedString = "";
+            var t1 = t;
+            t1.protectedString = "";
+            //t.publicString
+            WriteLine(ProtectedString);
+        }
         public override int GetNumber()
         {
             return 2;
         }
-        public new string GetSelf()
+        public override string GetSelf()
         {
             return "Client";
         }
@@ -64,23 +90,25 @@ namespace ConsoleApp3
     {
         static void Main(string[] args)
         {
+            // Перерыв до 
             //object o = new Client();
             Client client = new Client();
             Person client2 = new Client();
-            WriteLine(client.GetSelf());
-            WriteLine(client2.GetSelf());
+            client.PrintProtectedString();
+            //WriteLine(client.GetSelf());
+            //WriteLine(client2.GetSelf());
 
-            if (client is Person)
-            {
-                WriteLine((client as Person).GetSelf());
-                WriteLine(((Person)client).GetSelf());
-            }
+            //if (client is Person)
+            //{
+            //    WriteLine((client as Person).GetSelf());
+            //    WriteLine(((Person)client).GetSelf());
+            //}
 
             Person[] persons = { client, new Employer() };
 
             foreach (Person person in persons) {
-                person.hasAccess();
-                string name = person.Name;
+                //WriteLine(person.GetSelf());
+                //string name = person.Name;
             }
 
             ReadKey();

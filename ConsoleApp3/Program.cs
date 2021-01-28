@@ -5,14 +5,14 @@ namespace ConsoleApp3
 {
     class Program
     {
-        class Vector2 {
+        private class Vector2 
+        {
             public Vector2(int x, int y)
             {
                 X = x;
                 Y = y;
             }
-
-            public int X { get; set; }
+            public int X {  get; set; }
             public int Y { get; set; }
             public static Vector2 operator +(Vector2 v1, Vector2 v2) {
                 return new Vector2(v1.X  + v2.X, v1.Y + v2.Y);
@@ -70,24 +70,78 @@ namespace ConsoleApp3
             public static explicit operator int(Vector2 v) {
                 return v.X + v.Y;
             }
-            public static implicit operator Rect(Vector2 v) {
-                return new Rect(v.X, v.Y);
+            public int this[int index] {
+                get
+                {
+                    return index == 0 ? X : Y;
+                }
+                set
+                {
+                    if (index == 0)
+                    {
+                        X = value;
+                    }
+                    else {
+                        Y = value;
+                    }
+                }
             }
-        }
-        class Rect {
-            public Rect(int x, int y)
-            {
-                X = x;
-                Y = y;
+            public int this[string index] {
+                get
+                {
+
+                    return index == "X" ? X : index == "Y" ? Y : 0;
+                }
+                set
+                {
+                    if (index == "X")
+                    {
+                        X = value;
+                    }
+                    else if (index == "Y") {
+                        Y = value;
+                    }
+                }
             }
-            public int X { get; set; }
-            public int Y { get; set; }
+            public int this[Vector2 index2, string index] {
+                set
+                {
+                    X = value;
+                }
+            }
+            public int this[string index, Vector2 index2] {
+                get
+                {
+
+                    return index == "X" ? X : index == "Y" ? Y : 0;
+                }
+                set
+                {
+                    if (index == "X")
+                    {
+                        X = value;
+                    }
+                    else if (index == "Y") {
+                        Y = value;
+                    }
+                }
+            }
+            public int Length { get => 2; }
         }
         static void Main(string[] args)
         {
-            Vector2 v = new Vector2(10, 10);
-            int i = (int)v;
-            Rect rect = v;
+            Vector2 v = new Vector2(5, 10);
+            string[] o = { "X", "Y" };
+            
+            v.X = 2;
+            v["X"] = 1;
+            v["Y"] = 2;
+
+            v["X"] = 1;
+            v["Y"] = 2;
+
+            WriteLine(v[0]);
+            WriteLine(v[1]);
 
             ReadKey();
         }

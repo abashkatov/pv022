@@ -27,16 +27,39 @@ namespace ConsoleApp3
             {
                 return $"{{X: {X}, Y: {Y}}}";
             }
+            public override int GetHashCode()
+            {
+                return ToString().GetHashCode();
+            }
+            public bool Equals(Vector2 v2)
+            {
+                return X == v2.X && Y == v2.Y;
+            }
+            public static bool Equals(Vector2 v1, Vector2 v2)
+            {
+                return v1==v2;
+            }
+            public static bool operator ==(Vector2 v1, Vector2 v2) 
+            {
+                return v1.Equals(v2);
+            }
+            public static bool operator !=(Vector2 v1, Vector2 v2) 
+            {
+                return !(v1==v2);
+            }
         }
         static void Main(string[] args)
         {
             Vector2 v1 = new Vector2(1, 1),
                     v2 = new Vector2(1, 1), v3;
+            v3 = v1;
 
-            v3 = v1 + v2;
+            WriteLine("V2 ============");
+            WriteLine(Vector2.Equals(v1, v2));
+            WriteLine(v1.Equals(v2));
+            WriteLine(v1 == v2);
 
-
-            WriteLine(v3);
+            //WriteLine(v3);
 
             ReadKey();
         }

@@ -67,26 +67,28 @@ namespace ConsoleApp3
                     v1.Y > 0 || v2.Y > 0 ? 1 : -1
                 );
             }
+            public static explicit operator int(Vector2 v) {
+                return v.X + v.Y;
+            }
+            public static implicit operator Rect(Vector2 v) {
+                return new Rect(v.X, v.Y);
+            }
+        }
+        class Rect {
+            public Rect(int x, int y)
+            {
+                X = x;
+                Y = y;
+            }
+            public int X { get; set; }
+            public int Y { get; set; }
         }
         static void Main(string[] args)
         {
-            Vector2 v1 = new Vector2(-1, 1), v2 = new Vector2(1, 1);
-            if (v1 && v2)
-            {
-                WriteLine(true);
-            }
-            else
-            {
-                WriteLine(false);
-            }
-            if (v1 || v2)
-            {
-                WriteLine(true);
-            }
-            else
-            {
-                WriteLine(false);
-            }
+            Vector2 v = new Vector2(10, 10);
+            int i = (int)v;
+            Rect rect = v;
+
             ReadKey();
         }
     }

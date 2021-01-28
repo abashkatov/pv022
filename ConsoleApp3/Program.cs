@@ -53,11 +53,25 @@ namespace ConsoleApp3
             public static bool operator false(Vector2 v) {
                 return !(v.X > 0 && v.Y > 0);
             }
+            public static Vector2 operator & (Vector2 v1, Vector2 v2)
+            {
+                return new Vector2(
+                    v1.X > 0 && v2.X > 0 ? 1 : -1,
+                    v1.Y > 0 && v2.Y > 0 ? 1 : -1
+                );
+            }
+            public static Vector2 operator | (Vector2 v1, Vector2 v2)
+            {
+                return new Vector2(
+                    v1.X > 0 || v2.X > 0 ? 1 : -1,
+                    v1.Y > 0 || v2.Y > 0 ? 1 : -1
+                );
+            }
         }
         static void Main(string[] args)
         {
-            Vector2 v1 = new Vector2(-1, 1), v2 = new Vector2(1,1);
-            if (v1)
+            Vector2 v1 = new Vector2(-1, 1), v2 = new Vector2(1, 1);
+            if (v1 && v2)
             {
                 WriteLine(true);
             }
@@ -65,7 +79,7 @@ namespace ConsoleApp3
             {
                 WriteLine(false);
             }
-            if (v2)
+            if (v1 || v2)
             {
                 WriteLine(true);
             }

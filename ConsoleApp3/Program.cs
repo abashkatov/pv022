@@ -1,115 +1,42 @@
-﻿using static System.Console;
+﻿using System.Windows.Input;
+using static System.Console;
 
 namespace ConsoleApp3
 {
-    abstract class BaseEntity 
-    {
-        public string publicString = "publicString BaseEntity";
-        protected string protectedString = "BaseEntity";
-        private string privateString = "privateString";
-    }
-    abstract class BasePerson: BaseEntity {
-        public new string publicString = "publicString BasePerson";
-        protected new string protectedString = "BasePerson";
-        protected string ProtectedString {
-            get => base.protectedString;
-        }
-    }
-    abstract class Person: BasePerson { 
-        public string Name;
-        public int Age;
-        public bool hasAccess()
-        {
-            return false;
-        }
-        abstract public int GetNumber();
-        public virtual string GetSelf() {
-            return "Person";
-        }
-        abstract public string GetThis();
-        abstract public string GetBase();
-    }
-    class Employer: Person {
-        public string Position;
-        public new bool hasAccess() 
-        {
-            return true;
-        }
-        public override int GetNumber()
-        {
-            return 1;
-        }
-        public override string GetSelf()
-        {
-            return "Employer";
-        }
-        public override string GetThis()
-        {
-            return this.GetSelf();
-        }
-        public override string GetBase()
-        {
-            return base.GetSelf();
-        }
-    }
-    class Client: Person {
-        public int CardNumber;
-        private string newPrivateString = "";
-        private string privateString = "";
-        //protected new string protectedString = "Client";
-        public void PrintProtectedString() {
-            //WriteLine(protectedString);
-            //WriteLine(base.protectedString);
-            //protectedString = "";
-            var t = this;
-            t.protectedString = "";
-            var t1 = t;
-            t1.protectedString = "";
-            //t.publicString
-            WriteLine(ProtectedString);
-        }
-        public override int GetNumber()
-        {
-            return 2;
-        }
-        public override string GetSelf()
-        {
-            return "Client";
-        }
-        public override string GetThis()
-        {
-            return this.GetSelf();
-        }
-        public override string GetBase()
-        {
-            return base.GetSelf();
-        }
-    }
-
     class Program
     {
+        class Vector2 {
+            public Vector2(int x, int y)
+            {
+                X = x;
+                Y = y;
+            }
+
+            public int X { get; set; }
+            public int Y { get; set; }
+            public static Vector2 operator +(Vector2 v1, Vector2 v2) {
+                return new Vector2(v1.X  + v2.X, v1.Y + v2.Y);
+            }
+            public static Vector2 operator +(Vector2 v1, int i) {
+                return new Vector2(v1.X  + i, v1.Y + i);
+            }
+            public static Vector2 operator +(int i, Vector2 v1) {
+                return v1 + i;
+            }
+            public override string ToString()
+            {
+                return $"{{X: {X}, Y: {Y}}}";
+            }
+        }
         static void Main(string[] args)
         {
-            // Перерыв до 
-            //object o = new Client();
-            Client client = new Client();
-            Person client2 = new Client();
-            client.PrintProtectedString();
-            //WriteLine(client.GetSelf());
-            //WriteLine(client2.GetSelf());
+            Vector2 v1 = new Vector2(1, 1),
+                    v2 = new Vector2(1, 1), v3;
 
-            //if (client is Person)
-            //{
-            //    WriteLine((client as Person).GetSelf());
-            //    WriteLine(((Person)client).GetSelf());
-            //}
+            v3 = v1 + v2;
 
-            Person[] persons = { client, new Employer() };
 
-            foreach (Person person in persons) {
-                //WriteLine(person.GetSelf());
-                //string name = person.Name;
-            }
+            WriteLine(v3);
 
             ReadKey();
         }

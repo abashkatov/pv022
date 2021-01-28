@@ -47,20 +47,32 @@ namespace ConsoleApp3
             {
                 return !(v1==v2);
             }
+            public static bool operator true(Vector2 v) {
+                return v.X > 0 && v.Y > 0;
+            }
+            public static bool operator false(Vector2 v) {
+                return !(v.X > 0 && v.Y > 0);
+            }
         }
         static void Main(string[] args)
         {
-            Vector2 v1 = new Vector2(1, 1),
-                    v2 = new Vector2(1, 1), v3;
-            v3 = v1;
-
-            WriteLine("V2 ============");
-            WriteLine(Vector2.Equals(v1, v2));
-            WriteLine(v1.Equals(v2));
-            WriteLine(v1 == v2);
-
-            //WriteLine(v3);
-
+            Vector2 v1 = new Vector2(-1, 1), v2 = new Vector2(1,1);
+            if (v1)
+            {
+                WriteLine(true);
+            }
+            else
+            {
+                WriteLine(false);
+            }
+            if (v2)
+            {
+                WriteLine(true);
+            }
+            else
+            {
+                WriteLine(false);
+            }
             ReadKey();
         }
     }

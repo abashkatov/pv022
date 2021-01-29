@@ -1,46 +1,50 @@
-﻿using static System.Console;
+﻿using System.Collections;
+using static System.Console;
 
 namespace ConsoleApp3
 {
-    interface A
+    class Days: IEnumerable, IEnumerator
     {
-        void Print();
-    }
-    interface B
-    {
-        void Print();
-    }
-    interface C
-    {
-        void Print();
-    }
-    class Runnable : A, B, C
-    {
-        public void Print()
+        int index = -1;
+
+        public int[] GetDays() 
         {
-            WriteLine("Runnable");
-        }
-        void A.Print()
-        {
-            WriteLine("A");
+            int[] days = { 1,2,3,4,5,6,7};
+
+            return days;
         }
 
-        void B.Print()
+        public object Current => index + 1;
+        public bool MoveNext()
         {
-            WriteLine("B");
+            index++;
+            if (index < 7)
+            {
+                return true;
+            }
+            index = -1;
+            return false;
         }
 
-        void C.Print()
+        public void Reset()
         {
-            WriteLine("C");
+            index = 0;
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this;
         }
     }
     class Program
     {
         static void Main(string[] args)
         {
-            A r = new Runnable();
-            r.Print();
+            Days days = new Days();
+            foreach (int day in days) 
+            {
+                WriteLine(day);
+            }
             ReadKey();
         }
     }

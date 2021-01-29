@@ -1,49 +1,39 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using static System.Console;
 
 namespace ConsoleApp3
 {
-    class Days: IEnumerable, IEnumerator
+    class Day: IComparable
     {
-        int index = -1;
-
-        public int[] GetDays() 
+        public Day(int number)
         {
-            int[] days = { 1,2,3,4,5,6,7};
-
-            return days;
+            Number = number;
         }
 
-        public object Current => index + 1;
-        public bool MoveNext()
+        public int Number { get; set; }
+
+        public int CompareTo(object obj)
         {
-            index++;
-            if (index < 7)
-            {
-                return true;
+            if (Number == (obj as Day).Number) {
+                return 0;
             }
-            index = -1;
-            return false;
-        }
-
-        public void Reset()
-        {
-            index = 0;
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return this;
+            return Number > (obj as Day).Number ? 1 : -1;
         }
     }
     class Program
     {
         static void Main(string[] args)
         {
-            Days days = new Days();
-            foreach (int day in days) 
-            {
-                WriteLine(day);
+            Day[] days = { 
+                new Day(2000000000),
+                new Day(2),
+                new Day(5),
+                new Day(-2000000000),
+            };
+            Array.Sort(days);
+            foreach (Day day in days) {
+                WriteLine(day.Number);
             }
             ReadKey();
         }

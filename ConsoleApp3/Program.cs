@@ -1,44 +1,46 @@
-﻿using ConsoleApp3.Command;
-using static System.Console;
+﻿using static System.Console;
 
 namespace ConsoleApp3
 {
+    interface A
+    {
+        void Print();
+    }
+    interface B
+    {
+        void Print();
+    }
+    interface C
+    {
+        void Print();
+    }
+    class Runnable : A, B, C
+    {
+        public void Print()
+        {
+            WriteLine("Runnable");
+        }
+        void A.Print()
+        {
+            WriteLine("A");
+        }
+
+        void B.Print()
+        {
+            WriteLine("B");
+        }
+
+        void C.Print()
+        {
+            WriteLine("C");
+        }
+    }
     class Program
     {
         static void Main(string[] args)
         {
-            string cmd;
-            bool IsStop = false;
-
-            ICommand[] commands = { 
-                new Output1Command(),
-                new OutputHiCommand(),
-                new ExitCommand(),
-                new InputErrorCommand(),
-            };
-
-            do
-            {
-                WriteLine("Menu:");
-                foreach (object command in commands)
-                {
-                    if (command is IPrintable) {
-                        WriteLine(command);
-                    }
-                }
-                Write("Введите номер действия: ");
-                cmd = ReadLine();
-                foreach (ICommand command in commands) 
-                {
-                    if (command.CanExecute(cmd))
-                    {
-                        string output = command.Execute(ref IsStop);
-                        WriteLine(output);
-                        break;
-                    }
-                }
-            } while (!IsStop);
-
+            A r = new Runnable();
+            r.Print();
             ReadKey();
         }
     }

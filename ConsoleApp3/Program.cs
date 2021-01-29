@@ -4,7 +4,17 @@ using static System.Console;
 
 namespace ConsoleApp3
 {
-    class Day: IComparable
+    class DayComparator : IComparer
+    {
+        public int Compare(object x, object y)
+        {
+            int a = (x as Day).Number;
+            int b = (y as Day).Number;
+
+            return a == b ? 0 : (a > b ? 1 : -1);
+        }
+    }
+    class Day
     {
         public Day(int number)
         {
@@ -12,14 +22,6 @@ namespace ConsoleApp3
         }
 
         public int Number { get; set; }
-
-        public int CompareTo(object obj)
-        {
-            if (Number == (obj as Day).Number) {
-                return 0;
-            }
-            return Number > (obj as Day).Number ? 1 : -1;
-        }
     }
     class Program
     {
@@ -31,7 +33,7 @@ namespace ConsoleApp3
                 new Day(5),
                 new Day(-2000000000),
             };
-            Array.Sort(days);
+            Array.Sort(days, new DayComparator());
             foreach (Day day in days) {
                 WriteLine(day.Number);
             }

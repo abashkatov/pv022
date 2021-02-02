@@ -4,27 +4,73 @@ using static System.Console;
 
 namespace ConsoleApp3
 {
-    class Day: ICloneable
-    {
-        public Day(int number)
-        {
-            Number = number;
+    class A {
+        // Исключения:
+        //   T:System.ArgumentNullException:
+        //     Свойство s имеет значение null.
+        //
+        //   T:System.FormatException:
+        //     s имеет неправильный формат.
+        //
+        //   T:System.OverflowException:
+        //     s представляет число, которое меньше значения System.Int32.MinValue или больше
+        //     значения System.Int32.MaxValue.
+        public int First(string s) {
+            int age;
+            try
+            {
+                age = Second(s);
+            }
+            catch (ArgumentException e)
+            {
+                throw new Exception("Our custom exception", e);
+            }
+
+            return age;
         }
+        public int Second(string s) {
+            int age = short.Parse(s);
 
-        public int Number { get; set; }
+            return age;
+        }
+        private int Parse(string s) {
+            int age;
+            if (int.TryParse(s, out age)) {
+                return age;
+            }
 
-        public object Clone()
-        {
-            return new Day(Number);
+            throw new ArgumentException("Не удалось спарсить строку");
         }
     }
     class Program
     {
         static void Main(string[] args)
         {
-            Day day = new Day(1),
-                day2 = day.Clone() as Day;
+            A a = new A();
+            string input;
+            int age;
+            while (true)
+            {
+                Write("Введите ваш возраст: ");
+                input = ReadLine();
+                if (input == "") {
+                    input = null;
+                }
 
+                try
+                {
+                    age = a.First(input);
+                    WriteLine($"Ваш возраст {age}");
+                }
+                catch (Exception e)
+                {
+                    throw new Exception("Our custom exception", e);
+                }
+
+
+                WriteLine();
+            }
+            
             ReadKey();
         }
     }

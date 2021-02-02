@@ -4,25 +4,31 @@ using static System.Console;
 
 namespace ConsoleApp3
 {
+
     class A
     {
-        public int First(string s)
+        public bool isAllow(string currentAge, string allowAge)
         {
-            int age;
+            int nCurrentAge, nAllowAge;
+
             try
             {
-                age = short.Parse(s);
-                WriteLine("End of try");
-                return age;
+                nCurrentAge = int.Parse(currentAge);
             }
-            catch (ArgumentException e) when (e.Message == "String")
-            {
-                throw;
+            catch (Exception e) {
+                ArgumentException exception = new ArgumentException(e.Message, nameof(currentAge), e);
+                throw exception;
             }
-            catch (ArgumentException e) when (e.Message == "int")
-            {
-                throw;
-            }
+
+            nAllowAge = int.Parse(allowAge);
+
+            //try { } catch (Exception e) { }
+            //ArgumentException exception = new ArgumentException(e.Message, "", e);
+            //throw exception;
+            // "currentAge"
+            // nameof(currentAge)
+
+            return nCurrentAge >= nAllowAge;
         }
     }
     class Program
@@ -30,22 +36,31 @@ namespace ConsoleApp3
         static void Main(string[] args)
         {
             A a = new A();
-            string input;
-            int age;
-            while (true)
+            string currentAge, allowAge;
+            bool result = false;
+            do
             {
                 Write("Введите ваш возраст: ");
-                input = ReadLine();
-                if (input == "") {
-                    input = null;
+                currentAge = ReadLine();
+                Write("Введите возраст, с которого разрешены операции: ");
+                allowAge = ReadLine();
+                try
+                {
+                    result = a.isAllow(currentAge, allowAge);
+                    if (!result)
+                    {
+                        WriteLine("Операция запрещена");
+                    }
+                }
+                catch (ArgumentException e) {
+                    WriteLine($"Error input argument {e.ParamName} is missing:" + e.Message);
                 }
 
-                age = a.First(input);
-                WriteLine($"Ваш возраст {age}");
 
                 WriteLine();
-            }
-            
+            } while (!result);
+            WriteLine("Операция РАЗРЕШЕНА");
+
             ReadKey();
         }
     }

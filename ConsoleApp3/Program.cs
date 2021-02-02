@@ -15,13 +15,13 @@ namespace ConsoleApp3
                 WriteLine("End of try");
                 return age;
             }
-            catch (Exception e) {
-
+            catch (ArgumentException e) when (e.Message == "String")
+            {
                 throw;
             }
-            finally {
-                WriteLine("finally");
-                age = 15;
+            catch (ArgumentException e) when (e.Message == "int")
+            {
+                throw;
             }
         }
     }

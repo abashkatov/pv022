@@ -9,21 +9,47 @@ namespace ConsoleApp3
     {
         static void Main(string[] args)
         {
-            var collection = new HybridDictionary();
-            collection.Add("Name0", "Ivan");
-            collection.Add("Name1", "Ivan");
-            collection.Add("Name2", "Ivan");
-            collection.Add("Name3", "Ivan");
-            collection.Add("Name4", "Ivan");
-            collection.Add("Name5", "Ivan");
-            collection.Add("Name6", "Ivan");
-            collection.Add("Name7", "Ivan");
-            ICollection keys = collection.Keys;
-            WriteLine(keys.GetType().Name);
+            var collection = new ArrayList(40);
+            WriteLine("Count " + collection.Count);
+            WriteLine("Capacity " + collection.Capacity);
+            WriteLine();
 
-            collection.Add("Name9", "Ivan");
-            keys = collection.Keys;
-            WriteLine(keys.GetType().Name);
+            collection.Add("1");
+            WriteLine("Count " + collection.Count);
+            WriteLine("Capacity " + collection.Capacity);
+            WriteLine();
+
+            collection.Add("1");
+            collection.Add("1");
+            collection.Add("1");
+            collection.Add("1");
+            WriteLine("Count " + collection.Count);
+            WriteLine("Capacity " + collection.Capacity);
+            WriteLine();
+
+            collection.Add("1");
+            collection.Add("1");
+            collection.Add("1");
+            collection.Add("1");
+            WriteLine("Count " + collection.Count);
+            WriteLine("Capacity " + collection.Capacity);
+            WriteLine();
+
+            collection.Add("1");
+            collection.Add("1");
+            collection.Add("1");
+            collection.Add("1");
+            collection.Add("1");
+            collection.Add("1");
+            collection.Add("1");
+            collection.Add("1");
+            WriteLine("Count " + collection.Count);
+            WriteLine("Capacity " + collection.Capacity);
+            WriteLine();
+
+
+            WriteLine(collection[0]);
+            
 
             ReadKey();
         }

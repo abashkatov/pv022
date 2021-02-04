@@ -4,7 +4,7 @@ using static System.Console;
 
 namespace ConsoleApp3
 {
-    class Resource
+    class Resource: IDisposable
     {
         string Name;
         string s = "1";
@@ -14,9 +14,9 @@ namespace ConsoleApp3
             Name = name;
         }
 
-        ~Resource()
+        public void Dispose()
         {
-            WriteLine(Name + " has been finalized");
+            WriteLine("Dispose " + Name);
         }
     }
     class Program
@@ -33,16 +33,24 @@ namespace ConsoleApp3
             5. Освобождение памяти
             */
 
-            Resource r = new Resource("O1");
-            CreateResource();
+            using (Resource r = new Resource("O1")) 
+            {
 
-            GC.Collect();
+                r.ToString();
+                CreateResource();
+                throw new Exception();
+                WriteLine("LastLine");
+            }
+            
+            
+            //GC.Collect();
 
             ReadKey();
         }
         public static void CreateResource()
         {
             Resource r = new Resource("O2");
+            //r.Dispose();
         }
     }
 }

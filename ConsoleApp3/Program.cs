@@ -12,8 +12,8 @@ namespace ConsoleApp3
         static void Main(string[] args)
         {
             List<IWorker> workers = new List<IWorker>();
-            var chef = new Chef();
-            workers.Add(chef);
+            var chief = new Chief();
+            workers.Add(chief);
             workers.Add(new Builder());
             workers.Add(new Builder());
             workers.Add(new Builder());
@@ -41,7 +41,7 @@ namespace ConsoleApp3
                 }
             } while (parts.Count > 0);
 
-            chef.DoWork(building, parts);
+            chief.DoWork(building, parts);
 
             ReadKey();
         }

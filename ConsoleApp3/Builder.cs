@@ -14,8 +14,12 @@ namespace ConsoleApp3
                 WriteLine("Ошибка! У меня кончились материалы.");
                 return;
             }
-            IPart part = ((Queue<IPart>)parts).Dequeue();
-            building.AddPart(part);
+            IPart part;
+            do
+            {
+                part = parts.Dequeue();
+            }
+            while ((!building.TryAddPart(part)) && parts.Count > 0);
         }
     }
 }

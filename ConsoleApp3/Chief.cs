@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp3
 {
-    class Chef: IWorker
+    class Chief: IWorker
     {
         public void DoWork(Building building, Queue<IPart> parts)
         {

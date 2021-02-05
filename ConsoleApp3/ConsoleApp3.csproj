@@ -46,7 +46,7 @@
   <ItemGroup>
     <Compile Include="Builder.cs" />
     <Compile Include="Building.cs" />
-    <Compile Include="Chef.cs" />
+    <Compile Include="Chief.cs" />
     <Compile Include="Floor.cs" />
     <Compile Include="IPart.cs" />
     <Compile Include="IWorker.cs" />

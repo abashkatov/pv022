@@ -16,8 +16,8 @@ namespace ConsoleApp3
 
         public Building(int maxWall, int maxFloor)
         {
-            this.maxWall = maxWall;
             this.maxFloor = maxFloor;
+            this.maxWall = maxWall;
         }
 
         public bool TryAddPart(IPart part) {

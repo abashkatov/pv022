@@ -6,20 +6,39 @@ using static System.Console;
 
 namespace ConsoleApp3
 {
-    class Person { }
-    class Client: Person { }
-    class Custom<T> where T : IList
-    { 
-
+    class Days
+    {
+        public IEnumerator<string> GetEnumerator()
+        {
+            string[] days = {"Понедельник",
+            "Вторник",
+            "Среда",
+            "Четверг" };
+            foreach (string day in days)
+            {
+                yield return day;
+            }
+            string[] days2 = {
+                "Пятница",
+            "Суббота" };
+            foreach (string day in days2)
+            {
+                yield return day;
+            }
+            yield return "Воскресенье";
+        }
     }
     class Program
     {
-        // Перерыв до 20-20
         static void Main(string[] args)
         {
-            var cString = new Custom<ArrayList>();
-            var cPerson = new Custom<Person>();
-
+            var days = new Days();
+            foreach (var day in days) {
+                WriteLine(day);
+            }
+            //foreach (var day in days) {
+            //    WriteLine(day);
+            //}
             ReadKey();
         }
     }

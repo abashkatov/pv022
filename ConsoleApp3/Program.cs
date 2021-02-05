@@ -6,15 +6,19 @@ using static System.Console;
 
 namespace ConsoleApp3
 {
+    class Person { }
+    class Client: Person { }
+    class Custom<T> where T : IList
+    { 
+
+    }
     class Program
     {
+        // Перерыв до 20-20
         static void Main(string[] args)
         {
-            object o;
-            int i = 5;
-
-            o = i;
-            i = (int)o;
+            var cString = new Custom<ArrayList>();
+            var cPerson = new Custom<Person>();
 
             ReadKey();
         }

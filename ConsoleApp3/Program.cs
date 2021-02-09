@@ -6,42 +6,27 @@ using static System.Console;
 
 namespace ConsoleApp3
 {
-    public delegate string UpdateString(string str);
-
     public class Program
     {
-        private static UpdateString updateString;
+        static void WriteName(Pet obj) {
+            WriteLine(obj.Name);
+        }
         static void Main(string[] args)
         {
-            updateString?.Invoke("Hi");
+            List<Pet> pets = new List<Pet>();
+            pets.Add(new Pet("First"));
+            pets.Add(new Pet("Second"));
 
-            updateString += AddExclamationMark;
-            updateString += AddQuestionMark;
-            updateString += AddExclamationMark;
-            updateString += AddPointMark;
-            updateString += AddExclamationMark;
-            updateString -= AddExclamationMark;
+            pets.ForEach(WriteName);
 
-            WriteLine("Now call delegate");
-
-            string result = updateString("Hi");
-
-            WriteLine(result);
-
-            //System.Delegate
             ReadKey();
         }
-        static string AddExclamationMark(string str) {
-            WriteLine(nameof(AddExclamationMark));
-            return str + "!";
+    }
+    class Pet {
+        public Pet(string name)
+        {
+            Name = name;
         }
-        static string AddQuestionMark(string str) {
-            WriteLine(nameof(AddQuestionMark));
-            return str + "?";
-        }
-        static string AddPointMark(string str) {
-            WriteLine(nameof(AddPointMark));
-            return str + ".";
-        }
+        public string Name { get; set; }
     }
 }

@@ -6,44 +6,42 @@ using static System.Console;
 
 namespace ConsoleApp3
 {
+    public delegate string UpdateString(string str);
 
-    class Program
+    public class Program
     {
+        private static UpdateString updateString;
         static void Main(string[] args)
         {
-            List<IWorker> workers = new List<IWorker>();
-            var chief = new Chief();
-            workers.Add(chief);
-            workers.Add(new Builder());
-            workers.Add(new Builder());
-            workers.Add(new Builder());
-            workers.Add(new Builder());
-            workers.Add(new Builder());
-            Queue<IPart> parts = new Queue<IPart>();
-            parts.Enqueue(new Floor());
-            parts.Enqueue(new Floor());
-            parts.Enqueue(new Floor());
-            parts.Enqueue(new Floor());
-            parts.Enqueue(new Floor());
-            parts.Enqueue(new Wall());
-            parts.Enqueue(new Wall());
-            parts.Enqueue(new Wall());
-            parts.Enqueue(new Wall());
-            parts.Enqueue(new Wall());
-            parts.Enqueue(new Wall());
-            parts.Enqueue(new Wall());
-            parts.Enqueue(new Wall());
-            Building building = new Building();
+            updateString?.Invoke("Hi");
 
-            do {
-                foreach (IWorker worker in workers) {
-                    worker.DoWork(building, parts);
-                }
-            } while (parts.Count > 0);
+            updateString += AddExclamationMark;
+            updateString += AddQuestionMark;
+            updateString += AddExclamationMark;
+            updateString += AddPointMark;
+            updateString += AddExclamationMark;
+            updateString -= AddExclamationMark;
 
-            chief.DoWork(building, parts);
+            WriteLine("Now call delegate");
 
+            string result = updateString("Hi");
+
+            WriteLine(result);
+
+            //System.Delegate
             ReadKey();
+        }
+        static string AddExclamationMark(string str) {
+            WriteLine(nameof(AddExclamationMark));
+            return str + "!";
+        }
+        static string AddQuestionMark(string str) {
+            WriteLine(nameof(AddQuestionMark));
+            return str + "?";
+        }
+        static string AddPointMark(string str) {
+            WriteLine(nameof(AddPointMark));
+            return str + ".";
         }
     }
 }

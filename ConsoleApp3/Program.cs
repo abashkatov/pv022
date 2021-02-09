@@ -32,12 +32,21 @@ namespace ConsoleApp3
             }
 
             public void GoToNextTrafficLight(TrafficLight trafficLight) {
-                trafficLight.LightChanged += move;
+                string end = "!";
+                trafficLight.LightChanged += () => WriteLine("Car " + Color + " has been moved" + end);
             }
+            // x => WriteLine(x);
+            // (x) => WriteLine(x);
+            // x => { WriteLine(x); }
+            // (x) => { WriteLine(x); }
+            // () => WriteLine(x);
+            // (x, y) => WriteLine(x);
+            // (x, y) => {WriteLine(x); WriteLine(y); }
             public void GoToDetour(TrafficLight trafficLight) {
-                trafficLight.LightChanged -= move;
+                trafficLight.LightChanged -= delegate () { WriteLine("Car " + Color + " has been moved"); };
             }
-            protected void move() {
+            private void move()
+            {
                 WriteLine("Car " + Color + " has been moved");
             }
         }
@@ -48,7 +57,7 @@ namespace ConsoleApp3
             carGreen.GoToNextTrafficLight(tl);
             carRed.GoToNextTrafficLight(tl);
             carRed.GoToDetour(tl);
-
+            
             string input;
             do {
                 Write("Введите `д`, чтобы включить светофор: ");

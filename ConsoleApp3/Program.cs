@@ -8,25 +8,57 @@ namespace ConsoleApp3
 {
     public class Program
     {
-        static void WriteName(Pet obj) {
-            WriteLine(obj.Name);
+        protected delegate void LightChanged();
+
+        class TrafficLight {
+            //public LightChanged lightChanged;
+            public event LightChanged LightChanged;
+
+            private bool canGo = false;
+            public bool CanGo {
+                get => canGo;
+                set {
+                    canGo = value;
+                    LightChanged?.Invoke();
+                } 
+            }
+        }
+        class Car {
+            public string Color;
+
+            public Car(string color)
+            {
+                Color = color;
+            }
+
+            public void GoToNextTrafficLight(TrafficLight trafficLight) {
+                trafficLight.LightChanged += move;
+            }
+            public void GoToDetour(TrafficLight trafficLight) {
+                trafficLight.LightChanged -= move;
+            }
+            protected void move() {
+                WriteLine("Car " + Color + " has been moved");
+            }
         }
         static void Main(string[] args)
         {
-            List<Pet> pets = new List<Pet>();
-            pets.Add(new Pet("First"));
-            pets.Add(new Pet("Second"));
+            TrafficLight tl = new TrafficLight();
+            Car carGreen = new Car("Green"), carRed = new Car("Red");
+            carGreen.GoToNextTrafficLight(tl);
+            carRed.GoToNextTrafficLight(tl);
+            carRed.GoToDetour(tl);
 
-            pets.ForEach(WriteName);
+            string input;
+            do {
+                Write("Введите `д`, чтобы включить светофор: ");
+                input = ReadLine();
+                if (input == "д") {
+                    tl.CanGo = true;
+                }
+            } while (true);
 
             ReadKey();
         }
-    }
-    class Pet {
-        public Pet(string name)
-        {
-            Name = name;
-        }
-        public string Name { get; set; }
     }
 }

@@ -6,67 +6,54 @@ using static System.Console;
 
 namespace ConsoleApp3
 {
+    /**
+     * 1. Добавить делегат
+     * 2. Добавить событие
+     * 3. Добавить метод для подписки или использовать существующий
+     * 4. Подписаться методом (из п.3) на событие (из п. 2)
+     * 5. При изменении имени вызывать событие
+     * */
     public class Program
     {
-        protected delegate void LightChanged();
-
-        class TrafficLight {
-            //public LightChanged lightChanged;
-            public event LightChanged LightChanged;
-
-            private bool canGo = false;
-            public bool CanGo {
-                get => canGo;
+        class Person {
+            private string _name;
+            public string Name {
+                get => _name;
                 set {
-                    canGo = value;
-                    LightChanged?.Invoke();
-                } 
-            }
-        }
-        class Car {
-            public string Color;
-
-            public Car(string color)
-            {
-                Color = color;
-            }
-
-            public void GoToNextTrafficLight(TrafficLight trafficLight) {
-                string end = "!";
-                trafficLight.LightChanged += () => WriteLine("Car " + Color + " has been moved" + end);
-            }
-            // x => WriteLine(x);
-            // (x) => WriteLine(x);
-            // x => { WriteLine(x); }
-            // (x) => { WriteLine(x); }
-            // () => WriteLine(x);
-            // (x, y) => WriteLine(x);
-            // (x, y) => {WriteLine(x); WriteLine(y); }
-            public void GoToDetour(TrafficLight trafficLight) {
-                trafficLight.LightChanged -= delegate () { WriteLine("Car " + Color + " has been moved"); };
-            }
-            private void move()
-            {
-                WriteLine("Car " + Color + " has been moved");
-            }
-        }
-        static void Main(string[] args)
-        {
-            TrafficLight tl = new TrafficLight();
-            Car carGreen = new Car("Green"), carRed = new Car("Red");
-            carGreen.GoToNextTrafficLight(tl);
-            carRed.GoToNextTrafficLight(tl);
-            carRed.GoToDetour(tl);
-            
-            string input;
-            do {
-                Write("Введите `д`, чтобы включить светофор: ");
-                input = ReadLine();
-                if (input == "д") {
-                    tl.CanGo = true;
+                    _name = value;
                 }
-            } while (true);
+            }
 
+        }
+        class Form
+        {
+            public void Draw(Person person)
+            {
+                Clear();
+                CursorLeft = 0;
+                CursorTop = 0;
+                WriteLine("Имя: " + person.Name);
+            }
+            public string AskNewName()
+            {
+                CursorLeft = 0;
+                CursorTop = 3;
+                Write("Введите новое имя: ");
+                return ReadLine();
+            }
+        }
+            static void Main(string[] args)
+        {
+            Person person = new Person();
+            Form form = new Form();
+            string name;
+            form.Draw(person);
+            do
+            {
+                name = form.AskNewName();
+                person.Name = name;
+                //form.Draw(person);
+            } while (true);
             ReadKey();
         }
     }

@@ -11,16 +11,31 @@ namespace ConsoleApp3
     {
         static void Main(string[] args)
         {
-            IEnumerable<int> query;
-            int[] intRange = { 11, 23, 1, 2};
+            IEnumerable<IGrouping<bool, Person>> groups;
+            Person[] persons = { 
+                new Person("Name 1", 15, 170),
+                new Person("Name 2", 17, 180),
+                new Person("Name 3", 20, 190),
+                new Person("Name 4", 22, 200),
+                new Person("Name 5", 16, 160),
+            };
 
-            query = from i in intRange
-                    where i % 2 == 1
-                    orderby i
-                    select i;
+            groups = from person in persons
+                         //where person.Age > 18
+                         //orderby person.Age
+                     group person by person.Age > 18 into gr
+                     where gr.Count() > 1
+                     select gr
+                     ;
+                    //select person;
 
-            foreach (int i in query) {
-                WriteLine(i);
+
+            foreach (IGrouping<bool, Person> group in groups) {
+                string title = group.Key ? "adults" : "children";
+                WriteLine("===" + title + "===");
+                foreach (Person person in group) {
+                    WriteLine(person.Name);
+                }
             }
 
             ReadKey();

@@ -13,21 +13,16 @@ namespace ConsoleApp3
     {
         static void Main(string[] args)
         {
-            string source = "Hello World!";
-            string dest;
+            string[] fileNames = Directory.GetFiles("./");
+            List<FileInfo> fileInfos = new List<FileInfo>();
 
-            using (StreamWriter fs = new StreamWriter("example.txt", false))
-            {
-                fs.WriteLine(source);
+            foreach (string fileName in fileNames) {
+                fileInfos.Add(new FileInfo(fileName));
             }
 
-            using (StreamReader fs = new StreamReader("example.txt"))
-            {
-                dest = fs.ReadLine();
+            foreach (FileInfo fileInfo in fileInfos) {
+                WriteLine("{0,25} {1, 20}", fileInfo.Name, fileInfo.Length);
             }
-
-            WriteLine(dest);
-
             ReadKey();
         }
     }

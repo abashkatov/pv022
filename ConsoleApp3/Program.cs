@@ -16,19 +16,16 @@ namespace ConsoleApp3
             string source = "Hello World!";
             string dest;
 
-            using (FileStream fs = new FileStream("example.txt", FileMode.OpenOrCreate))
+            using (StreamWriter fs = new StreamWriter("example.txt", false))
             {
-                byte[] buffer = Encoding.Default.GetBytes(source);
-                fs.Write(buffer, 0, buffer.Length);
+                fs.WriteLine(source);
             }
 
-            using (FileStream fs = new FileStream("example.txt", FileMode.Open))
+            using (StreamReader fs = new StreamReader("example.txt"))
             {
-                byte[] buffer = new byte[fs.Length];
-                int i = fs.Read(buffer, 0, (int)fs.Length);
-                WriteLine("Прочитано " + i + " байт");
-                dest = Encoding.Default.GetString(buffer);
+                dest = fs.ReadLine();
             }
+
             WriteLine(dest);
 
             ReadKey();

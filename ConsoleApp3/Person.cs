@@ -7,6 +7,15 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp3
 {
+    /// <summary>
+    /// Класс Person 11
+    /// </summary>
+    /// <example>
+    /// Пример кода
+    ///     <code>
+    ///     Person person = new Person();
+    ///     </code>
+    /// </example>
     [Serializable]
     public class Person
     {
@@ -28,6 +37,18 @@ namespace ConsoleApp3
             Name = name;
             Age = age;
             Height = height;
+        }
+        /// <summary>
+        /// Это тестовый метод
+        /// </summary>
+        /// <param name="i">
+        ///     Это первый параметр
+        /// </param>
+        /// <returns>
+        ///  Возвращает что-то
+        /// </returns>
+        public int test(int i) {
+            return i;
         }
     }
 }

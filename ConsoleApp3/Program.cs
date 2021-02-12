@@ -12,35 +12,16 @@ using System.Xml;
 
 namespace ConsoleApp3
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class Program
     {
         static void Main(string[] args)
         {
-            using (XmlTextWriter writer = new XmlTextWriter("persons.xml", Encoding.Default))
-            {
-                writer.Formatting = Formatting.Indented;
-                writer.WriteStartDocument();
-                writer.WriteStartElement("Persons");
-                {
-                    writer.WriteStartElement("Person");
-
-                    writer.WriteAttributeString("Name", "Name 1");
-                    writer.WriteElementString("Age", "30");
-
-                    writer.WriteEndElement();
-                }
-                {
-                    writer.WriteStartElement("Person");
-                    writer.WriteAttributeString("Name", "Name 2");
-                    writer.WriteElementString("Age", "35");
-
-                    writer.WriteEndElement();
-                }
-                writer.WriteEndElement();
-                writer.WriteEndDocument();
-            }
-
-            //ReadKey();
+            Person person = new Person();
+            person.test(1);
+            ReadKey();
         }
     }
 }

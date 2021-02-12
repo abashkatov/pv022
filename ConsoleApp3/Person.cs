@@ -2,18 +2,22 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace ConsoleApp3
 {
-    class Person
+    [Serializable]
+    public class Person
     {
         private static int count = 0;
 
         public readonly int ID;
-        public string Name;
-        public int Age;
-        public int Height;
+        public string Name { get; set; }
+        [JsonPropertyName("AgeAge")]
+        public int Age { get; set; }
+        [JsonIgnore]
+        public int Height { get; set; }
 
         public Person()
         {

@@ -6,6 +6,8 @@ using System.Collections.Specialized;
 using static System.Console;
 using System.IO;
 using System.Text;
+using System.Xml.Serialization;
+using System.Text.Json;
 
 namespace ConsoleApp3
 {
@@ -13,6 +15,7 @@ namespace ConsoleApp3
     {
         static void Main(string[] args)
         {
+            // Перерыв до 20-10
             List<Person> personsBefore = new List<Person>();
             personsBefore.Add(new Person("Name 1", 20, 180));
             personsBefore.Add(new Person("Name 2", 25, 180));
@@ -23,71 +26,41 @@ namespace ConsoleApp3
             {
                 WriteLine(person.Name);
             }
-            WriteLine("=====================");
-
-            StringBuilder data = new StringBuilder();
-
-            // Сериализация - реобразование данных в текст
-            foreach (Person person in personsBefore)
+            
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<Person>));
+            using (FileStream fs = new FileStream("data.xml", FileMode.Truncate))
             {
-                data.Append(person.Name + "," + person.Age + "," + person.Height + "\n");
+                xmlSerializer.Serialize(fs, personsBefore);
             }
 
-            using (StreamWriter fs = new StreamWriter("data.txt")) {
-                fs.WriteLine(data.ToString());
-            }
-            // ...
-            string newData;
-            using (StreamReader fs = new StreamReader("data.txt"))
             {
-                newData = fs.ReadToEnd();
-            }
-
-            // Десериализация - восстановление данных из текста/потока байт
-            /**
-             * json
-             * [
-             *  {
-             *      "Name": "Name 1",
-             *      "Age": 20,
-             *      "Height": 180
-             *  },
-             *  {
-             *      "Name": "Name 2",
-             *      "Age": 25,
-             *      "Height": 180
-             *  }
-             * ]
-             * xml
-             * <xml>
-             * <data>
-             *  <List>
-             *      <Person Name="Name 1" Age="20" Height="180"/>
-             *      <Person>
-             *          <Name>Name 1</Name>
-             *          <Age>Name 1</Age>
-             *          <Height>Name 1</Height>
-             *      </Person>
-             *  </List>
-             * </data>
-             * 
-             * */
-
-            string[] rawPersons = newData.Split('\n');
-            foreach (string rawPerson in rawPersons)
-            {
-                string[] fileds = rawPerson.Split(',');
-                if (fileds.Length != 3)
+                JsonSerializerOptions options = new JsonSerializerOptions();
+                options.WriteIndented = true;
+                string json = JsonSerializer.Serialize<List<Person>>(personsBefore, options);
+                using (StreamWriter streamWriter = new StreamWriter("data.json"))
                 {
-                    continue;
+                    streamWriter.WriteLine(json);
                 }
-                //fileds[0] имя
-                //fileds[1] возраст
-                //fileds[2] рост
-                personsAfter.Add(new Person(fileds[0], int.Parse(fileds[1]), int.Parse(fileds[2])));
             }
 
-            foreach (Person person in personsAfter) {
+
+            WriteLine("XML=====================");
+            using (FileStream fs = new FileStream("data.xml", FileMode.Open))
+            {
+                personsAfter = xmlSerializer.Deserialize(fs) as List<Person>;
+            }
+            foreach (Person person in personsAfter)
+            {
+                WriteLine(person.Name);
+            }
+
+            WriteLine("JSON=====================");
+            using (StreamReader fs = new StreamReader("data.json"))
+            {
+                personsAfter = JsonSerializer.Deserialize<List<Person>>(fs.ReadToEnd());
+            }
+            foreach (Person person in personsAfter)
+            {
                 WriteLine(person.Name);
             }
 

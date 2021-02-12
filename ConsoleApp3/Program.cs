@@ -13,16 +13,84 @@ namespace ConsoleApp3
     {
         static void Main(string[] args)
         {
-            string[] fileNames = Directory.GetFiles("./");
-            List<FileInfo> fileInfos = new List<FileInfo>();
+            List<Person> personsBefore = new List<Person>();
+            personsBefore.Add(new Person("Name 1", 20, 180));
+            personsBefore.Add(new Person("Name 2", 25, 180));
 
-            foreach (string fileName in fileNames) {
-                fileInfos.Add(new FileInfo(fileName));
+            List<Person> personsAfter = new List<Person>();
+
+            foreach (Person person in personsBefore)
+            {
+                WriteLine(person.Name);
+            }
+            WriteLine("=====================");
+
+            StringBuilder data = new StringBuilder();
+
+            // Сериализация - реобразование данных в текст
+            foreach (Person person in personsBefore)
+            {
+                data.Append(person.Name + "," + person.Age + "," + person.Height + "\n");
             }
 
-            foreach (FileInfo fileInfo in fileInfos) {
-                WriteLine("{0,25} {1, 20}", fileInfo.Name, fileInfo.Length);
+            using (StreamWriter fs = new StreamWriter("data.txt")) {
+                fs.WriteLine(data.ToString());
             }
+            // ...
+            string newData;
+            using (StreamReader fs = new StreamReader("data.txt"))
+            {
+                newData = fs.ReadToEnd();
+            }
+
+            // Десериализация - восстановление данных из текста/потока байт
+            /**
+             * json
+             * [
+             *  {
+             *      "Name": "Name 1",
+             *      "Age": 20,
+             *      "Height": 180
+             *  },
+             *  {
+             *      "Name": "Name 2",
+             *      "Age": 25,
+             *      "Height": 180
+             *  }
+             * ]
+             * xml
+             * <xml>
+             * <data>
+             *  <List>
+             *      <Person Name="Name 1" Age="20" Height="180"/>
+             *      <Person>
+             *          <Name>Name 1</Name>
+             *          <Age>Name 1</Age>
+             *          <Height>Name 1</Height>
+             *      </Person>
+             *  </List>
+             * </data>
+             * 
+             * */
+
+            string[] rawPersons = newData.Split('\n');
+            foreach (string rawPerson in rawPersons)
+            {
+                string[] fileds = rawPerson.Split(',');
+                if (fileds.Length != 3)
+                {
+                    continue;
+                }
+                //fileds[0] имя
+                //fileds[1] возраст
+                //fileds[2] рост
+                personsAfter.Add(new Person(fileds[0], int.Parse(fileds[1]), int.Parse(fileds[2])));
+            }
+
+            foreach (Person person in personsAfter) {
+                WriteLine(person.Name);
+            }
+
             ReadKey();
         }
     }

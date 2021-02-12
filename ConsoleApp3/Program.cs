@@ -8,6 +8,7 @@ using System.IO;
 using System.Text;
 using System.Xml.Serialization;
 using System.Text.Json;
+using System.Xml;
 
 namespace ConsoleApp3
 {
@@ -15,56 +16,31 @@ namespace ConsoleApp3
     {
         static void Main(string[] args)
         {
-            // Перерыв до 20-10
-            List<Person> personsBefore = new List<Person>();
-            personsBefore.Add(new Person("Name 1", 20, 180));
-            personsBefore.Add(new Person("Name 2", 25, 180));
-
-            List<Person> personsAfter = new List<Person>();
-
-            foreach (Person person in personsBefore)
+            using (XmlTextWriter writer = new XmlTextWriter("persons.xml", Encoding.Default))
             {
-                WriteLine(person.Name);
-            }
-            
-            XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<Person>));
-            using (FileStream fs = new FileStream("data.xml", FileMode.Truncate))
-            {
-                xmlSerializer.Serialize(fs, personsBefore);
-            }
-
-            {
-                JsonSerializerOptions options = new JsonSerializerOptions();
-                options.WriteIndented = true;
-                string json = JsonSerializer.Serialize<List<Person>>(personsBefore, options);
-                using (StreamWriter streamWriter = new StreamWriter("data.json"))
+                writer.Formatting = Formatting.Indented;
+                writer.WriteStartDocument();
+                writer.WriteStartElement("Persons");
                 {
-                    streamWriter.WriteLine(json);
+                    writer.WriteStartElement("Person");
+
+                    writer.WriteAttributeString("Name", "Name 1");
+                    writer.WriteElementString("Age", "30");
+
+                    writer.WriteEndElement();
                 }
+                {
+                    writer.WriteStartElement("Person");
+                    writer.WriteAttributeString("Name", "Name 2");
+                    writer.WriteElementString("Age", "35");
+
+                    writer.WriteEndElement();
+                }
+                writer.WriteEndElement();
+                writer.WriteEndDocument();
             }
 
-
-            WriteLine("XML=====================");
-            using (FileStream fs = new FileStream("data.xml", FileMode.Open))
-            {
-                personsAfter = xmlSerializer.Deserialize(fs) as List<Person>;
-            }
-            foreach (Person person in personsAfter)
-            {
-                WriteLine(person.Name);
-            }
-
-            WriteLine("JSON=====================");
-            using (StreamReader fs = new StreamReader("data.json"))
-            {
-                personsAfter = JsonSerializer.Deserialize<List<Person>>(fs.ReadToEnd());
-            }
-            foreach (Person person in personsAfter)
-            {
-                WriteLine(person.Name);
-            }
-
-            ReadKey();
+            //ReadKey();
         }
     }
 }

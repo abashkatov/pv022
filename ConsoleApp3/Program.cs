@@ -17,31 +17,49 @@ namespace ConsoleApp3
     {
         static void Main(string[] args)
         {
-            string 
-                url = "cian.ru/spb/nevskiy/11/dfhhfghejfhsdhfshdkjfhsdfgsdfgsdfg",
-                email1 = "df-g@dfh.ru",
-                email2 = "df.g@dfh"
-            ;
-
-            string
-                emailPattern = @"^\w+@\w+\.\w+$",
-                urlPattern = @"^cian\.ru\/(\w+)\/(\w+)\/(\w+)\/"
-            ;
-
-            Regex 
-                regexMail = new Regex(emailPattern),
-                regexUrl = new Regex(urlPattern)
-                ;
-            WriteLine(email1 + " is match " + regexMail.IsMatch(email1));
-            WriteLine(email2 + " is match " + regexMail.IsMatch(email2));
-
-            var matches = regexUrl.Matches(url);
-            foreach (Match match in matches) {
-                foreach (Group group in match.Groups)
-                {
-                    WriteLine(group.Value);
+            /*
+             * 1. Взаимодействие с пользователем. - Presentation Layer
+             * 2. Роутинг - 
+             * 3. Бизнес логика. - Domain
+             * 4. Организация данных.
+             * */
+            bool isEnd = false;
+            ConsoleKeyInfo key;
+            int currentMenuPosition = 0;
+            int menuLength = 4;
+            List<string> menu = new List<string>();
+            menu.Add("1. Пункт 1");
+            menu.Add("2. Пункт 2");
+            menu.Add("3. Пункт 3");
+            menu.Add("4. Выход");
+            do {
+                Clear();
+                WriteLine($"Текущий пунтк меню: {currentMenuPosition+1}");
+                for (int i = 0; i < menu.Count; i++) {
+                    BackgroundColor = ConsoleColor.White;
+                    ForegroundColor = ConsoleColor.Black;
+                    //Console.ResetColor
+                    WriteLine(menu[i].ToString());
                 }
-            }
+                key = ReadKey();
+                switch (key.Key) {
+                    case ConsoleKey.UpArrow:
+                        currentMenuPosition--;
+                        break;
+                    case ConsoleKey.DownArrow:
+                        currentMenuPosition++;
+                        break;
+                }
+                if (currentMenuPosition >= menuLength) {
+                    currentMenuPosition %= menuLength;
+                }
+                if (currentMenuPosition < 0) {
+                    currentMenuPosition += menuLength;
+                }
+
+            } while (!isEnd);
+
+
 
             ReadKey();
         }

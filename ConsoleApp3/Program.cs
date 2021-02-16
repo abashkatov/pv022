@@ -48,15 +48,34 @@ namespace ConsoleApp3
              * */
 
             List<Person> persons = new List<Person>();
-            persons.Add(new Person("Name 1", 20));
+            persons.Add(new Person($"Name {persons.Count + 1}", 20));
+            persons.Add(new Person($"Name {persons.Count + 1}", 20));
+            persons.Add(new Person($"Name {persons.Count + 1}", 20));
+            persons.Add(new Person($"Name {persons.Count + 1}", 20));
+            persons.Add(new Person($"Name {persons.Count + 1}", 20));
+            persons.Add(new Person($"Name {persons.Count + 1}", 20));
+            persons.Add(new Person($"Name {persons.Count + 1}", 20));
+
+            Select<Person> select = new Select<Person>(persons);
+            int index;
+            bool result = select.TrySelect(out index);
+            if (result)
+            {
+                WriteLine($"Была выбрана персона №{index + 1}: " + persons[index]);
+            }
+            else
+            {
+                WriteLine("Пользоавтель отменил выбор");
+            }
 
             List<ICommand> commands = new List<ICommand>();
             commands.Add(new HelloWorldCommand());
 
-            Menu menu = new Menu(commands);
-            menu.Run();
 
-            //ReadKey();
+            //Menu menu = new Menu(commands);
+            //menu.Run();
+
+            ReadKey();
         }
     }
 }

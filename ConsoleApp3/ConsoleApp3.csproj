@@ -79,6 +79,7 @@
     <Compile Include="Command\ICommand.cs" />
     <Compile Include="Model\Menu.cs" />
     <Compile Include="Entity\Person.cs" />
+    <Compile Include="Model\Select.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

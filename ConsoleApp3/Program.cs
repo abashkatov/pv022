@@ -10,6 +10,7 @@ using System.Xml.Serialization;
 using System.Text.Json;
 using System.Xml;
 using System.Text.RegularExpressions;
+using ConsoleApp3.Model;
 
 namespace ConsoleApp3
 {
@@ -23,45 +24,17 @@ namespace ConsoleApp3
              * 3. Бизнес логика. - Domain
              * 4. Организация данных.
              * */
-            bool isEnd = false;
-            ConsoleKeyInfo key;
-            int currentMenuPosition = 0;
-            int menuLength = 4;
-            List<string> menu = new List<string>();
-            menu.Add("1. Пункт 1");
-            menu.Add("2. Пункт 2");
-            menu.Add("3. Пункт 3");
-            menu.Add("4. Выход");
-            do {
-                Clear();
-                WriteLine($"Текущий пунтк меню: {currentMenuPosition+1}");
-                for (int i = 0; i < menu.Count; i++) {
-                    BackgroundColor = ConsoleColor.White;
-                    ForegroundColor = ConsoleColor.Black;
-                    //Console.ResetColor
-                    WriteLine(menu[i].ToString());
-                }
-                key = ReadKey();
-                switch (key.Key) {
-                    case ConsoleKey.UpArrow:
-                        currentMenuPosition--;
-                        break;
-                    case ConsoleKey.DownArrow:
-                        currentMenuPosition++;
-                        break;
-                }
-                if (currentMenuPosition >= menuLength) {
-                    currentMenuPosition %= menuLength;
-                }
-                if (currentMenuPosition < 0) {
-                    currentMenuPosition += menuLength;
-                }
+            
+            List<string> commands = new List<string>();
+            commands.Add("1. Пункт 1");
+            commands.Add("2. Пункт 2");
+            commands.Add("3. Пункт 3");
+            commands.Add("4. Выход");
 
-            } while (!isEnd);
+            Menu menu = new Menu(commands);
+            menu.Run();
 
-
-
-            ReadKey();
+            //ReadKey();
         }
     }
 }

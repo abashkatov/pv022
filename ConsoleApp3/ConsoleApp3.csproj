@@ -78,13 +78,16 @@
     <Compile Include="Command\HelloWorldCommand.cs" />
     <Compile Include="Command\ICommand.cs" />
     <Compile Include="Model\Menu.cs" />
-    <Compile Include="Person.cs" />
+    <Compile Include="Entity\Person.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Dao\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

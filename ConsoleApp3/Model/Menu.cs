@@ -1,17 +1,15 @@
-﻿using System;
+﻿using ConsoleApp3.Command;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static System.Console;
 
 namespace ConsoleApp3.Model
 {
     class Menu
     {
-        List<string> menu;
+        List<ICommand> menu;
 
-        public Menu(List<string> menu)
+        public Menu(List<ICommand> menu)
         {
             this.menu = menu;
         }
@@ -20,7 +18,6 @@ namespace ConsoleApp3.Model
             bool isEnd = false;
             ConsoleKeyInfo key;
             int currentMenuPosition = 0;
-            
             do
             {
                 Clear();
@@ -31,7 +28,7 @@ namespace ConsoleApp3.Model
                         BackgroundColor = ConsoleColor.White;
                         ForegroundColor = ConsoleColor.Black;
                     }
-                    WriteLine(menu[i].ToString());
+                    WriteLine(menu[i].GetTitle());
                     if (i == currentMenuPosition)
                     {
                         ResetColor();
@@ -48,6 +45,9 @@ namespace ConsoleApp3.Model
                         break;
                     case ConsoleKey.Escape:
                         isEnd = true;
+                        break;
+                    case ConsoleKey.Enter:
+                        menu[currentMenuPosition].Run();
                         break;
                 }
                 if (currentMenuPosition >= menu.Count)

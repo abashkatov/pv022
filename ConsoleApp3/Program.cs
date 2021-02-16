@@ -11,6 +11,7 @@ using System.Text.Json;
 using System.Xml;
 using System.Text.RegularExpressions;
 using ConsoleApp3.Model;
+using ConsoleApp3.Command;
 
 namespace ConsoleApp3
 {
@@ -25,11 +26,11 @@ namespace ConsoleApp3
              * 4. Организация данных.
              * */
             
-            List<string> commands = new List<string>();
-            commands.Add("1. Пункт 1");
-            commands.Add("2. Пункт 2");
-            commands.Add("3. Пункт 3");
-            commands.Add("4. Выход");
+            List<ICommand> commands = new List<ICommand>();
+            commands.Add(new HelloWorldCommand());
+            //commands.Add("2. Пункт 2");
+            //commands.Add("3. Пункт 3");
+            //commands.Add("4. Выход");
 
             Menu menu = new Menu(commands);
             menu.Run();

@@ -75,6 +75,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Command\LoadFromFileCommand.cs" />
+    <Compile Include="Command\SaveToFileCommand.cs" />
+    <Compile Include="Command\GetListCommand.cs" />
     <Compile Include="Command\HelloWorldCommand.cs" />
     <Compile Include="Command\ICommand.cs" />
     <Compile Include="Model\Menu.cs" />

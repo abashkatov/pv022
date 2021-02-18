@@ -75,6 +75,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Command\AbstractCommand.cs" />
     <Compile Include="Command\LoadFromFileCommand.cs" />
     <Compile Include="Command\SaveToFileCommand.cs" />
     <Compile Include="Command\GetListCommand.cs" />

@@ -7,60 +7,27 @@ namespace ConsoleApp3.Model
 {
     class Menu
     {
-        List<ICommand> menu;
+        List<AbstractCommand> menu;
 
-        public Menu(List<ICommand> menu)
+        public Menu(List<AbstractCommand> menu)
         {
             this.menu = menu;
         }
 
         public void Run() {
             bool isEnd = false;
-            ConsoleKeyInfo key;
-            int currentMenuPosition = 0;
+            int selectedIndex;
+            Select<AbstractCommand> select = new Select<AbstractCommand>(menu);
             do
             {
-                Clear();
-                for (int i = 0; i < menu.Count; i++)
+                if (select.TrySelect(out selectedIndex))
                 {
-                    if (i == currentMenuPosition)
-                    {
-                        BackgroundColor = ConsoleColor.White;
-                        ForegroundColor = ConsoleColor.Black;
-                    }
-                    WriteLine(menu[i].GetTitle());
-                    if (i == currentMenuPosition)
-                    {
-                        ResetColor();
-                    }
+                    menu[selectedIndex].Run();
                 }
-                key = ReadKey();
-                switch (key.Key)
-                {
-                    case ConsoleKey.UpArrow:
-                        currentMenuPosition--;
-                        break;
-                    case ConsoleKey.DownArrow:
-                        currentMenuPosition++;
-                        break;
-                    case ConsoleKey.Escape:
-                        isEnd = true;
-                        break;
-                    case ConsoleKey.Enter:
-                        menu[currentMenuPosition].Run();
-                        break;
+                else {
+                    isEnd = true;
                 }
-                if (currentMenuPosition >= menu.Count)
-                {
-                    currentMenuPosition %= menu.Count;
-                }
-                if (currentMenuPosition < 0)
-                {
-                    currentMenuPosition += menu.Count;
-                }
-
             } while (!isEnd);
-
         }
     }
 }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp3.Command
 {
-    class GetListCommand : ICommand
+    class GetListCommand : AbstractCommand
     {
         private readonly List<Person> persons;
 
@@ -16,12 +16,12 @@ namespace ConsoleApp3.Command
             this.persons = persons;
         }
 
-        public string GetTitle()
+        public override string GetTitle()
         {
             return "Список пользователей";
         }
 
-        public void Run()
+        public override void Run()
         {
             Clear();
             foreach (Person person in persons)

@@ -4,10 +4,12 @@ using System.Collections.Generic;
 using static System.Console;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
+using System.Xml.Serialization;
 
 namespace ConsoleApp3.Command
 {
-    class LoadFromFileCommand : ICommand
+    class LoadFromFileCommand : AbstractCommand
     {
         private readonly List<Person> persons;
 
@@ -16,12 +18,12 @@ namespace ConsoleApp3.Command
             this.persons = persons;
         }
 
-        public string GetTitle()
+        public override string GetTitle()
         {
             return "Загрузить пользователей из файла";
         }
 
-        public void Run()
+        public override void Run()
         {
             /*
              * Запросить имя файла для загрузки
@@ -31,11 +33,35 @@ namespace ConsoleApp3.Command
              * Сохраняем 
              * 
              * */
+            string fileName;
+            bool fileExists;
 
-            foreach (Person person in persons)
+            do
             {
-                WriteLine(person.Name);
+                Write("Введите имя файла для загрузки данных (data.xml):");
+                fileName = ReadLine();
+                if (fileName == "")
+                {
+                    fileName = "data.xml";
+                }
+                if (!fileName.EndsWith(".xml"))
+                {
+                    fileName += ".xml";
+                }
+                fileExists = File.Exists(fileName);
+                if (!fileExists)
+                {
+                    Write($"Файл {fileName} не существует.");
+                }
+            } while (!fileExists);
+            XmlSerializer xmlSerializer = new XmlSerializer(persons.GetType());
+            using (TextReader stream = new StreamReader(fileName))
+            {
+                List<Person> tmp = xmlSerializer.Deserialize(stream) as List<Person>;
+                persons.Clear();
+                persons.AddRange(tmp);
             }
+
             ReadKey();
         }
     }

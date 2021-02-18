@@ -9,7 +9,7 @@ using System.IO;
 
 namespace ConsoleApp3.Command
 {
-    class SaveToFileCommand : ICommand
+    class SaveToFileCommand : AbstractCommand
     {
         private readonly List<Person> persons;
 
@@ -18,12 +18,12 @@ namespace ConsoleApp3.Command
             this.persons = persons;
         }
 
-        public string GetTitle()
+        public override string GetTitle()
         {
             return "Сохранить пользователей в файл";
         }
 
-        public void Run()
+        public override void Run()
         {
             /*
              * 1. Запросить у пользователя имя файла

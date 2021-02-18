@@ -2,14 +2,14 @@
 
 namespace ConsoleApp3.Command
 {
-    class HelloWorldCommand : ICommand
+    class HelloWorldCommand : AbstractCommand
     {
-        public string GetTitle()
+        public override string GetTitle()
         {
             return "Hello World";
         }
 
-        public void Run()
+        public override void Run()
         {
             MessageBox.Show("Hello World!", "Hello World!");
         }

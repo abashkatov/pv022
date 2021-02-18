@@ -20,16 +20,17 @@ namespace ConsoleApp3
     {
         static void Main(string[] args)
         {
+            // Перерыв до 20-15
             List<Person> persons = new List<Person>();
-            persons.Add(new Person($"Name {persons.Count + 1}", 20));
-            persons.Add(new Person($"Name {persons.Count + 1}", 20));
-            persons.Add(new Person($"Name {persons.Count + 1}", 20));
-            persons.Add(new Person($"Name {persons.Count + 1}", 20));
-            persons.Add(new Person($"Name {persons.Count + 1}", 20));
-            persons.Add(new Person($"Name {persons.Count + 1}", 20));
-            persons.Add(new Person($"Name {persons.Count + 1}", 20));
+            persons.Add(new Person($"Old Name {persons.Count + 1}", 20));
+            //persons.Add(new Person($"Name {persons.Count + 1}", 20));
+            //persons.Add(new Person($"Name {persons.Count + 1}", 20));
+            //persons.Add(new Person($"Name {persons.Count + 1}", 20));
+            //persons.Add(new Person($"Name {persons.Count + 1}", 20));
+            //persons.Add(new Person($"Name {persons.Count + 1}", 20));
+            //persons.Add(new Person($"Name {persons.Count + 1}", 20));
 
-            List<ICommand> commands = new List<ICommand>();
+            List<AbstractCommand> commands = new List<AbstractCommand>();
             commands.Add(new GetListCommand(persons));
             commands.Add(new SaveToFileCommand(persons));
             commands.Add(new LoadFromFileCommand(persons));
@@ -38,7 +39,7 @@ namespace ConsoleApp3
             Menu menu = new Menu(commands);
             menu.Run();
 
-            ReadKey();
+            //ReadKey();
         }
     }
 }
